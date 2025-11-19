@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Will send a curl request to the specified URL with the specified data and file.
-set -eo
+set -euo pipefail
 
 # Uncomment this when debugging the script.
 #set -x
@@ -61,7 +61,7 @@ else
 	rsync -rc "$GITHUB_WORKSPACE/" "$BUILD_DIR" --delete --delete-excluded
 fi
 # Remove empty directories
-find $BUILD_DIR -type d -empty -delete
+find "$BUILD_DIR" -type d -empty -delete
 echo "✓ Files copied!"
 
 # Zipping files
