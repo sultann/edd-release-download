@@ -70,7 +70,7 @@ runs:
 
     # Post message to Slack channel
     - name: Slack Notification
-      uses: rtCamp/action-slack-notify@master
+      uses: rtCamp/action-slack-notify@v2.4.0
       if: ${{ success() && inputs.slack_webhook != '' }}
       env:
         SLACK_COLOR: ${{ job.status }}

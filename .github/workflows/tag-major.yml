@@ -1,0 +1,25 @@
+name: Tag major version
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: write
+
+jobs:
+  major-tag:
+    name: Move major tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Point the major tag at this release
+        run: |
+          MAJOR="${GITHUB_REF_NAME%%.*}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -f "$MAJOR" "$GITHUB_SHA"
+          git push origin -f "refs/tags/$MAJOR"
+          echo "Moved $MAJOR -> $GITHUB_REF_NAME ($GITHUB_SHA)"
